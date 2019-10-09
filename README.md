@@ -8,9 +8,9 @@ For any queries email: P.ladosz2@lboro.ac.uk
 This repository is based on RL repositor https://github.com/ShangtongZhang/DeepRL
 
 
-#installation intstructions:
+# Installation intstructions:
 
-##Installing MOHQA dependencies:
+## Installing MOHQA dependencies:
 
 1. (Optional and recomended) start new Conda environment (for details on installing conda see: [conda installation](https://docs.conda.io/projects/conda/en/latest/user-guide/install/))
 ```
@@ -37,7 +37,7 @@ pip install -e .
 
 The code should be ready to run.
 
-##To test:
+## Testing:
  
 1. Go to the MOHQA directory
 ```
