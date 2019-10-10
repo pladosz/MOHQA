@@ -1,0 +1,11 @@
+gvgai:
+    container_name: "gvgai"
+    image: gvgai-env
+    ports:
+        - 8889:8888
+        - 6007:6006
+        - 5910:5900
+    volumes:
+        - "~/Documents/L2M/git/gvgai:/root/code/host"
+# example run command
+# docker run --name gvgai-v "~/Documents/L2M/git/gvgai:/root/code/host":/root/code/host" -p 8889:8888 -p 6007:6006 -p 5910:5900 gvgai-env 

@@ -1,0 +1,24 @@
+installation intstructions:
+
+Installing MOHQA dependencies:
+
+1. (Optional and recomended) start new Conda environment (for details on installing conda see: ...)
+	conda create -n "ENVNAME" python=3.6
+2. (Only do this if you did step 1) Activate environment:
+	conda activate ENVNAME
+3. Install depenendencies using pip
+	pip install -r requirements.txt
+Installing CT-graph:
+1. go into maze ct-graph directory:
+	cd DynamicMazeEnv
+2. Install the graph:
+	pip install -e .
+
+The code should be ready to run.
+
+To test: 
+1. Go to the MOHQA directory
+	cd ..
+2. run:
+	python maze_start.py
+	
