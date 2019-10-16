@@ -3,11 +3,11 @@
   "beta":-0.3,
   "tau_E":48,
   "a_learning_rate":0.0001,
-  "baseline_modulation":-0.0001,
+  "baseline_modulation":-0.001,
   "theta_low":-0.01,
   "theta_high":0.7,
-  "percent_of_top_features":0.08,
-  "percent_of_bottom_features":0.08,
+  "percent_of_top_features":0.13,
+  "percent_of_bottom_features":0.13,
   "averging mu":0.99,
   "number_of_stored_activations":1
 }

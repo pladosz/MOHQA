@@ -66,7 +66,7 @@ class ApnnNet(nn.Module, BaseNet):
         self.to(Config.DEVICE)
 
     def compute_EMA(self,mu,x,last_average):
-        """functioin computes exponential decaying moving average (EMA)
+        """Function computes exponential decaying moving average (EMA)
         inputs: mu- parameter determining how much current data is affecting the average (i.e. the lower the more effect current data has)
                 x - current data point
         last_average - past average to be updated
@@ -75,7 +75,7 @@ class ApnnNet(nn.Module, BaseNet):
         return new_average.detach()
 
     def predict(self, x, steps, to_numpy = False):
-        """function is used for prediction of next action agent should take
+        """Function is used for prediction of next action agent should take
         input: x - current state
                steps - current step
                to_numpy - flag deciding if output tensor should be casted as a numpy array
@@ -84,7 +84,7 @@ class ApnnNet(nn.Module, BaseNet):
         features = self.body(tensor(x))
         apnn_features = features.detach()
         random_mask = torch.cuda.FloatTensor(apnn_features.shape).uniform_()>0.8
-        apnn_features = apnn_features+((random_mask.float()*(torch.randn(apnn_features.shape).cuda()*0.05)))
+        apnn_features = apnn_features+((random_mask.float()*(torch.randn(apnn_features.shape).cuda()*0.1)))
         if to_numpy:
             self.running_average = self.compute_EMA(self.mu,features,self.running_average)
         if type(self.running_average) == np.ndarray:
