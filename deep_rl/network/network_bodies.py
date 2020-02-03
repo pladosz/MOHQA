@@ -11,10 +11,10 @@ class NatureConvBody(nn.Module):
     def __init__(self, in_channels = 1):
         super(NatureConvBody, self).__init__()
         self.feature_dim = 16
-        self.conv1 = layer_init(nn.Conv2d(in_channels, 4, kernel_size = 5, stride = 1))
-        self.conv2 = layer_init(nn.Conv2d(4, 8, kernel_size = 3, stride = 1))
-        self.conv3 = layer_init(nn.Conv2d(8, 16, kernel_size = 3, stride = 1))
-        self.fc4 = layer_init(nn.Linear(256, self.feature_dim))
+        self.conv1 = layer_init(nn.Conv2d(in_channels, 16, kernel_size=4, stride=4))
+        self.conv2 = layer_init(nn.Conv2d(16, 32, kernel_size=2, stride=2))
+        self.conv3 = layer_init(nn.Conv2d(32, 32, kernel_size=2, stride=1))
+        self.fc4 = layer_init(nn.Linear(288, self.feature_dim))
 
     def forward(self, x):
         y = F.relu(self.conv1(x))
@@ -32,10 +32,10 @@ class ApnnConvBody(nn.Module):
     def __init__(self, in_channels = 1):
         super(ApnnConvBody, self).__init__()
         self.feature_dim = 16
-        self.conv1 = layer_init(nn.Conv2d(in_channels, 4, kernel_size = 5, stride = 1))
-        self.conv2 = layer_init(nn.Conv2d(4, 8, kernel_size = 3, stride = 1))
-        self.conv3 = layer_init(nn.Conv2d(8, 16, kernel_size = 3, stride = 1))
-        self.fc4 = layer_init(nn.Linear(256, self.feature_dim))
+        self.conv1 = layer_init(nn.Conv2d(in_channels, 16, kernel_size=4, stride=4))
+        self.conv2 = layer_init(nn.Conv2d(16, 32, kernel_size=2, stride=2))
+        self.conv3 = layer_init(nn.Conv2d(32, 32, kernel_size=2, stride=1))
+        self.fc4 = layer_init(nn.Linear(288, self.feature_dim))
 
     def forward(self, x):
         y = F.relu(self.conv1(x))

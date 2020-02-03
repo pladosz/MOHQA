@@ -72,6 +72,37 @@ class Maze(BaseTask):
         self.name = name
         self.conf_data = conf_data
 
+
+class Minecraft_imaze(BaseTask):
+    def __init__(self, name, seed=0, log_dir=None,
+                     frame_skip=4, history_length=4, dataset=False, conf_data={}):
+        #define parameters
+        BaseTask.__init__(self)
+        env = MazeDepth2v4Grid(max_num_turns=5, max_nav_actions=70)
+        print(env.get_goals())
+        env.set_goal(np.array([20,21]))
+        obs, reward, done, info  = env.reset()
+        self.env = env
+        self.action_dim =3#self.env.action_space.n
+        self.state_dim = 3#self.env.observation_space.shape
+        self.name = name
+        self.conf_data=conf_data
+
+    def step(self, action):
+        if action == 0:
+            action = 0
+        elif action == 1:
+            action = 2
+        elif action == 2:
+            action = 3
+        print(action)
+        next_state, reward, done, info = self.env.step(action)
+        #print 'base task step called'
+        #print self.env
+        if done:
+            next_state = self.env.reset()[0]
+        return next_state, reward, done, info
+        
 class PixelAtari(BaseTask):
     def __init__(self, name, seed = 0, log_dir = None,
                  frame_skip = 4, history_length = 4, dataset = False):
