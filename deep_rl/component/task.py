@@ -14,7 +14,7 @@ import uuid
 #from gym_CTgraph.CTgraph_conf import CTgraph_conf
 #from gym_CTgraph.CTgraph_images import CTgraph_images
 import gym
-from mcgridenv import MazeDepth2v5Grid
+from mcgridenv import MazeDepth2v4Grid
 
 
 class BaseTask:
@@ -81,9 +81,9 @@ class Minecraft_imaze(BaseTask):
                      frame_skip=4, history_length=4, dataset=False, conf_data={}):
         #define parameters
         BaseTask.__init__(self)
-        env = MazeDepth2v5Grid(max_num_turns=5, max_nav_actions=70)
+        env = MazeDepth2v4Grid(max_num_turns=5, max_nav_actions=70)
         print(env.get_goals())
-        env.set_goal(np.array([12,13]))
+        env.set_goal(np.array([10,11]))
         obs, reward, done, info  = env.reset()
         self.env = env
         self.action_dim =3#self.env.action_space.n

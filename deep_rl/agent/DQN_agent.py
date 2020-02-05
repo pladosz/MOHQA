@@ -35,7 +35,7 @@ class DQNAgent(BaseAgent):
         episode_start_time = time.time()
         #print 'begin reset'
         state = self.task.reset()[0]
-        state = np.expand_dims(state,axis = 0)
+        state=np.transpose(state,(2,0,1))
         total_reward = 0.0
         steps = 0
         #print('begin episode')
@@ -51,6 +51,7 @@ class DQNAgent(BaseAgent):
                 action = self.policy.sample(value)
             #print 'call self.task.step(action)'
             next_state, reward, done, info = self.task.step(action)
+            next_state=np.transpose(next_state,(2,0,1))
             if(episode % 1000000 ==  0):
                 file_path = self.config.log_dir+"/debug_matrix/"
                 self.features_detached_log = np.vstack([self.features_detached_log,self.network.features_detached])
@@ -66,8 +67,6 @@ class DQNAgent(BaseAgent):
             #print(info)
             #print(next_state)
             #print(done)
-            if len(next_state.shape)<3:
-                next_state = np.expand_dims(next_state,axis = 0)
             #print 'task step'
             #if reward >0.5:
             #    print(info)

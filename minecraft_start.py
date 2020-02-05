@@ -22,7 +22,7 @@ import deep_rl.utils.apnn_conf as apnn_conf
 #from gym_CTgraph.CTgraph_conf import CTgraph_conf
 #from gym_CTgraph.CTgraph_images import CTgraph_images
 import gym
-from mcgridenv import MazeDepth2v5Grid
+from mcgridenv import MazeDepth2v4Grid
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 
@@ -32,7 +32,7 @@ def dqn_minecraft(name):
     #config.seed = 213124
     #config.seed = 457875
     #config.seed = 578578
-    config.seed = 1
+    config.seed = 12345
 #    config.max_steps = 2 * 1000000
     config.expType = \
     "dqn_pa_gs_mine_{0}_v2".format(config.seed)
@@ -47,13 +47,13 @@ def dqn_minecraft(name):
     config.optimizer_fn = lambda params: torch.optim.RMSprop(params, lr=0.001, alpha=0.95, eps=0.01)
     # config.network_fn = lambda state_dim, action_dim: VanillaNet(action_dim, NatureConvBody())
     config.network_fn = lambda state_dim, action_dim: VanillaNet(action_dim, NatureConvBody())
-    config.policy_fn = lambda: GreedyPolicy(LinearSchedule(1.0, 0.0,3.0e6))
+    config.policy_fn = lambda: GreedyPolicy(LinearSchedule(1.0, 0.0,1.5e6))
     config.replay_fn = lambda: Replay(memory_size=int(1e6), batch_size=32)
     config.state_normalizer = ImageNormalizer()
     config.reward_normalizer = SignNormalizer()
-    config.gradient_clip = 5
-    config.discount = 0.99
-    config.target_network_update_freq = 5000
+    config.gradient_clip = 1
+    config.discount = 0.6
+    config.target_network_update_freq = 1000
     config.exploration_steps= 50000
     # config.double_q = True
     config.double_q = False
@@ -118,4 +118,4 @@ if __name__ ==  '__main__':
     set_one_thread()
     select_device(1)
     # select different implementations of algorithms (use examples.py for further references)
-    apnn_minecraft('minecraft')
+    dqn_minecraft('minecraft')
