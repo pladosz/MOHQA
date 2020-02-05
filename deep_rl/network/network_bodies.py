@@ -8,7 +8,7 @@ from .network_utils import *
 import time
 
 class NatureConvBody(nn.Module):
-    def __init__(self, in_channels = 1):
+    def __init__(self, in_channels = 3):
         super(NatureConvBody, self).__init__()
         self.feature_dim = 16
         self.conv1 = layer_init(nn.Conv2d(in_channels, 16, kernel_size=4, stride=4))
@@ -29,7 +29,7 @@ class NatureConvBody(nn.Module):
 class ApnnConvBody(nn.Module):
     """The body used for APNN. The only difference between this and NatureConvBody
        is lack of tanh in output of forward() method."""
-    def __init__(self, in_channels = 1):
+    def __init__(self, in_channels = 3):
         super(ApnnConvBody, self).__init__()
         self.feature_dim = 16
         self.conv1 = layer_init(nn.Conv2d(in_channels, 16, kernel_size=4, stride=4))

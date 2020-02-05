@@ -16,10 +16,13 @@ from deep_rl.agent.ApnnDQN_agent import ApnnDQNAgent
 import os
 #import run_maze_with_trained_model
 from shutil import copy
-from gym_CTgraph import CTgraph_env
-from gym_CTgraph.CTgraph_plot import CTgraph_plot
-from gym_CTgraph.CTgraph_conf import CTgraph_conf
-from gym_CTgraph.CTgraph_images import CTgraph_images
+import deep_rl.utils.apnn_conf as apnn_conf
+#from gym_CTgraph import CTgraph_env
+#from gym_CTgraph.CTgraph_plot import CTgraph_plot
+#from gym_CTgraph.CTgraph_conf import CTgraph_conf
+#from gym_CTgraph.CTgraph_images import CTgraph_images
+import gym
+from mcgridenv import MazeDepth2v5Grid
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 
@@ -62,7 +65,7 @@ def dqn_minecraft(name):
 
 def apnn_minecraft(name):
     config = Config()
-    config.seed = 1
+    config.seed = 12345
     #config.seed = 213124
     #config.seed = 457875
     #config.seed = 578578
@@ -76,7 +79,7 @@ def apnn_minecraft(name):
     config.apnn_conf_data = apnn_configuration.getParameters()
     config.expID = "apnn"
     config.log_dir = get_default_log_dir(config.expType) + config.expID
-    config.episode_limit = 1400000
+    config.episode_limit = 1000000
     config.history_length = 1
     config.task_fn = lambda: Minecraft_imaze(name, history_length=config.history_length, log_dir=config.log_dir, conf_data=None)
     config.optimizer_fn = lambda params: torch.optim.RMSprop(params, lr=0.001, alpha=0.95, eps=0.01)
@@ -84,13 +87,13 @@ def apnn_minecraft(name):
         # config.network_fn = lambda state_dim, action_dim: VanillaNet(action_dim, NatureConvBody())
     config.network_fn = lambda state_dim, action_dim: \
             ApnnNet(action_dim, ApnnConvBody(),config.apnn_conf_data)
-    config.policy_fn = lambda: GreedyPolicy(LinearSchedule(1, 0, 3.0e6))
+    config.policy_fn = lambda: GreedyPolicy(LinearSchedule(1, 0, 1.5e6))
     config.replay_fn = lambda: Replay(memory_size=int(1e6), batch_size=32)
     config.state_normalizer = ImageNormalizer()
     config.reward_normalizer = SignNormalizer()
-    config.gradient_clip = 0.05
+    config.gradient_clip = 0.1
     config.discount = 0.6
-    config.target_network_update_freq = 5000
+    config.target_network_update_freq = 1000
     config.exploration_steps= 50000
     # config.double_q = True
     config.double_q = False
@@ -115,4 +118,4 @@ if __name__ ==  '__main__':
     set_one_thread()
     select_device(1)
     # select different implementations of algorithms (use examples.py for further references)
-    apnn_maze('CTgraph-v0')
+    apnn_minecraft('minecraft')

@@ -29,7 +29,7 @@ class ApnnDQNAgent(BaseAgent):
     def episode(self, deterministic = False,episode = 0):
         episode_start_time = time.time()
         state = self.task.reset()[0]
-        state = np.expand_dims(state,axis = 0)
+        state=np.transpose(state,(2,0,1))
         total_reward = 0.0
         steps = 0
         self.network.reset()
@@ -50,17 +50,14 @@ class ApnnDQNAgent(BaseAgent):
                 action = self.policy.sample(value)
             self.network.compute_eligbility_traces_action(value,action)
             next_state, reward, done, info = self.task.step(action)
+            next_state=np.transpose(next_state,(2,0,1))
             if steps == 2:
                 action_storage = action
                 self.network.action_storage = action_storage
-            state_type_list.append(self.task.env.env.stateType)
             y_apnn_out_stack = np.vstack([y_apnn_out_stack, self.network.y_apnn_out.cpu()])
             y_apnn_in_stack = np.vstack([y_apnn_in_stack, self.network.y_apnn_in.cpu()])
             y_dqn_out_stack = np.vstack([y_dqn_out_stack, self.network.y_dqn_out_detached.cpu()])
             Eligbility_traces_stack = np.dstack([Eligbility_traces_stack, self.network.Eligbility_traces.cpu()])
-            y_conv_layers_stack = np.vstack([y_conv_layers_stack, self.network.body.conv_layers_output.cpu()])
-            if len(next_state.shape)<3:
-                next_state = np.expand_dims(next_state,axis = 0)
             total_reward +=  reward
             reward = self.config.reward_normalizer(reward)
             if not deterministic:
@@ -129,11 +126,9 @@ class ApnnDQNAgent(BaseAgent):
                           (steps, episode_time, episode_time / float(steps)))
         if(episode % 100 ==  0):
             file_path = self.config.log_dir+"/debug_matrix/"
-            np.save(file_path+"state_type_{0}".format(episode),np.array(state_type_list))
             np.save(file_path+"y_apnn_out_stack_{0}".format(episode),y_apnn_out_stack)
             np.save(file_path+"y_dqn_out_stack_{0}".format(episode),y_dqn_out_stack)
             np.save(file_path+"y_apnn_in_stack_{0}".format(episode),y_apnn_in_stack)
-            np.save(file_path+"y_conv_layers_stack_{0}".format(episode),y_conv_layers_stack)
             np.save(file_path+"Eligbility_traces_stack_{0}".format(episode),Eligbility_traces_stack)
             np.save(file_path+"apnn_weights_{0}".format(episode),
                     self.network.apnn_head_output.weight.data.cpu().detach())

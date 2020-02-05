@@ -3,7 +3,7 @@
   "beta":-0.3,
   "tau_E":48,
   "a_learning_rate":0.0001,
-  "baseline_modulation":-0.001,
+  "baseline_modulation":-0.01,
   "theta_low":-0.01,
   "theta_high":0.7,
   "percent_of_top_features":0.13,
