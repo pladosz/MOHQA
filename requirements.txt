@@ -52,5 +52,5 @@ torchvision == 0.2.1
 tensorboardX==1.6
 tornado == 5.1.1
 tqdm == 4.31.1
-urllib3 == 1.24.1
+urllib3 == 1.24.2
 webencodings == 0.5.1
